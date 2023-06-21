@@ -13,7 +13,23 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 // Routes
-app.use('api', routers);
+app.use("/api", routers);
+
+// Middleware for handling undefined routes
+app.use((req, res, next) => {
+    const error = new Error('Endpoint Not Found');
+    error.status = 404;
+    next(error);
+  });
+  
+// Error handling middleware
+app.use((error, req, res, next) => {
+res.status(error.status || 500).json({
+    error: {
+    message: error.message || 'Internal Server Error',
+    },
+});
+});
 
 const startServer = async () => {
     try {

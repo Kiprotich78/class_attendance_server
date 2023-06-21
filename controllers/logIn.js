@@ -1,5 +1,9 @@
-const logIn = (req, res)=>{
-    console.log(req);
+const bcrypt = require('bcrypt');
+const User = require('../models/userModel')
+
+const logIn = async (req, res)=>{
+    
+
 
 }
 
