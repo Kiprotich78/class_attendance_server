@@ -1,6 +1,7 @@
 const express = require('express');
 const morgan = require('morgan');
 const Mongoose = require('mongoose')
+require('dotenv').config();
 
 const routers = require('./routes/router');
 
@@ -33,7 +34,7 @@ res.status(error.status || 500).json({
 
 const startServer = async () => {
     try {
-        await Mongoose.connect('mongodb+srv://kiprotich:WhRcgpv1fKIGPSaX@class-register.fzaugrk.mongodb.net/?retryWrites=true&w=majority', {
+        await Mongoose.connect(process.env.MONGO_URI, {
             useNewUrlParser: true,
             useUnifiedTopology: true,
         });

@@ -21,7 +21,7 @@ const logIn = async (req, res)=>{
             return res.status(401).json({Error: "invalid password"})
         }
 
-        const accessToken = jwt.sign({userId: existingUser._id}, "KIPROTICH");
+        const accessToken = jwt.sign({userId: existingUser._id}, process.env.SECRET_KEY);
 
         res.status(200).json({accessToken});
 
