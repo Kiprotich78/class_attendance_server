@@ -1,12 +1,12 @@
 const Mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
-const User = require('../models/userModel');
+const Lecturer = require('../models/lecturerModel');
 
 const signup =async (req, res)=>{
     try{
         const {firstName, lastName, email, password} = req.body;
 
-        const existingUser = await User.findOne({email});
+        const existingUser = await Lecturer.findOne({email});
 
         if(existingUser){
             return res.status(409).json({Error: "User Already Exists"});
@@ -14,7 +14,7 @@ const signup =async (req, res)=>{
 
         const hashedPassword = await bcrypt.hash(password, 10);
 
-        const user = new User({
+        const user = new Lecturer({
             firstName,
             lastName,
             email,
