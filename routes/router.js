@@ -7,6 +7,7 @@ const signup = require('../controllers/signup')
 const addStudent = require('../controllers/addStudent')
 const getAllStudents = require('../controllers/getAllStudents')
 const addUnit = require('../controllers/addUnit')
+const getAllUnits = require('../controllers/getAllUnits')
 
 
 router.post('/login', logIn)
@@ -17,6 +18,7 @@ router.post('/addstudent', auth, addStudent)
 router.get('/getAllStudents', auth, getAllStudents)
 
 router.post('/addUnit', auth, addUnit)
+router.get('/getAllUnits', auth, getAllUnits);
 
 
 module.exports = router;
