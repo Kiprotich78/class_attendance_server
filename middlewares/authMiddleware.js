@@ -5,21 +5,17 @@ const authMiddleware = (req, res, next) => {
   const token = req.headers.authorization;
 
   if (!token) {
-    return res.status(401).json({ error: 'Authorization token not provided' });
+    return res.status(401).json({ error: 'Not Authorized' });
   }
 
-  try {
-    // Verify and decode the token
-    const decodedToken = jwt.verify(token, process.env.SECRET_KEY);
-
-    // Attach the decoded payload to the request object
-    req.user = decodedToken;
-
-    // Call the next middleware or route handler
+  jwt.verify(token, process.env.SECRET_KEY, (error, decoded) => {
+    if (error) {
+      return res.status(401).json({ Error: 'Invalid token' });
+    }
+    // Token is valid
+    req.body.lecturerId = decoded.userId;
     next();
-  } catch (error) {
-    return res.status(401).json({ error: 'Invalid token' });
-  }
+  })
 };
 
 module.exports = authMiddleware;

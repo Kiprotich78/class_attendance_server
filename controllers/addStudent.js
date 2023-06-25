@@ -2,25 +2,26 @@ const Student = require('../models/studentModel');
 
 const addStudent = async (req, res)=>{
     try{
-       const {firstName, lastName, email, phone, gender} = req.body;
+       const {lecturerId, firstName, lastName, email, phone, gender} = req.body;
         if(!firstName || !lastName || !email || !phone){
             return res.status(400).json({
                 Error: "All fields are required"
             })
         }
 
-        const existingStudent = await Student.findOne({email});
-        if(existingStudent){
-            return res.status(409).json({
-                Error: "Student Already Exists"
-            })
-        }
+        const students = await Student.find({email});
 
-        const numberOfDocuments = await Student.countDocuments();
+        if (students.some((student) => student.lecturerId === lecturerId)) {
+            return res.status(409).json({
+              Error: "Student Already Exists",
+            });
+        }
+        
+        const numberOfDocuments = await Student.countDocuments({lecturerId});
         const regNo = `stud-${findRegNo(numberOfDocuments)}`;
-        console.log(regNo);
 
         const student = new Student({
+            lecturerId,
             firstName,
             lastName,
             email,

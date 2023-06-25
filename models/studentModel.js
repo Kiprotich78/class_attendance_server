@@ -2,6 +2,10 @@ const Mongoose = require('mongoose');
 const { Schema } = Mongoose;
 
 const studentSchema = new Schema({
+    lecturerId: {
+        type: String,
+        required: true,
+    },
     firstName: {
         type: String,
         required: true,
@@ -17,14 +21,12 @@ const studentSchema = new Schema({
     registrationNumber: {
         type: String,
         required: true,
-        unique: true,
         minlength: 5,
         maxlength: 20
     },
     email: {
         type: String,
         required: true,
-        unique: true,
         maxlength: 100,
         match: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
     },
