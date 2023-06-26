@@ -12,6 +12,10 @@ const getAllLessons = async (req, res)=>{
             return res.status(400).json({Error: "Invalid Unit Id"})
         }
 
+        if(existingUnitId.lecturerId !== req.body.lecturerId){
+            return res.status(400).json({Error: "Invalid Unit Id"});
+        }
+
         const lessons = await LessonModel.find({unitID});
 
         return res.status(200).json({
