@@ -4,6 +4,7 @@ const { Schema } = Mongoose;
 const studentSchema = new Schema({
     lecturerId: {
         type: String,
+        ref: "lecturer",
         required: true,
     },
     firstName: {

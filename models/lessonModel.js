@@ -8,10 +8,7 @@ const lessonSchema  = new Schema({
       },
     unitID: {
         type: String,
-        required: true
-    },
-    lecturerID: {
-        type: String,
+        ref: "Unit",
         required: true
     },
     date: {
