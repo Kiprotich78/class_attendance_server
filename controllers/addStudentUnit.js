@@ -15,8 +15,14 @@ const addStudentUnit = async (req, res)=>{
             return res.status(400).json({Error: "Student Not Found"})
         }
 
-        console.log(availableStudent, lecturerId);
-        const availableUnit = await UnitModel.findById({_id: new mongoose.Types.ObjectId(unitID)})
+        let unitId;
+        try{
+           unitId = new mongoose.Types.ObjectId(unitID);
+        }
+        catch(error){
+            return res.status(400).json({Error: "Invalid Unit id"});
+        }
+        const availableUnit = await UnitModel.findById({_id: unitId})
         if(!availableUnit){
             return res.status(400).json({Error: "Invalid Unit id"});
         }
