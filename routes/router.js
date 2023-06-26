@@ -6,6 +6,7 @@ const logIn = require('../controllers/logIn')
 const signup = require('../controllers/signup')
 const addStudent = require('../controllers/addStudent')
 const getAllStudents = require('../controllers/getAllStudents')
+const addStudentUnit = require('../controllers/addStudentUnit')
 const addUnit = require('../controllers/addUnit')
 const getAllUnits = require('../controllers/getAllUnits')
 const addLesson = require('../controllers/addLesson')
@@ -18,6 +19,7 @@ router.post('/signup', signup)
 // protected routes
 router.post('/addstudent', auth, addStudent)
 router.get('/getAllStudents', auth, getAllStudents)
+router.post('/addStudentUnit/:studId', auth, addStudentUnit)
 
 router.post('/addUnit', auth, addUnit)
 router.get('/getAllUnits', auth, getAllUnits);
