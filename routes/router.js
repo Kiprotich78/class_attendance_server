@@ -9,6 +9,7 @@ const getAllStudents = require('../controllers/getAllStudents')
 const addUnit = require('../controllers/addUnit')
 const getAllUnits = require('../controllers/getAllUnits')
 const addLesson = require('../controllers/addLesson')
+const getAllLessons = require('../controllers/getAllLessons')
 
 
 router.post('/login', logIn)
@@ -22,6 +23,7 @@ router.post('/addUnit', auth, addUnit)
 router.get('/getAllUnits', auth, getAllUnits);
 
 router.post('/addlesson/:unitId', auth, addLesson)
+router.get('/getAllLessons/:unitId', auth, getAllLessons)
 
 
 module.exports = router;
