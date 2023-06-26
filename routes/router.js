@@ -8,6 +8,7 @@ const addStudent = require('../controllers/addStudent')
 const getAllStudents = require('../controllers/getAllStudents')
 const addUnit = require('../controllers/addUnit')
 const getAllUnits = require('../controllers/getAllUnits')
+const addLesson = require('../controllers/addLesson')
 
 
 router.post('/login', logIn)
@@ -19,6 +20,8 @@ router.get('/getAllStudents', auth, getAllStudents)
 
 router.post('/addUnit', auth, addUnit)
 router.get('/getAllUnits', auth, getAllUnits);
+
+router.post('/addlesson/:unitId', auth, addLesson)
 
 
 module.exports = router;
