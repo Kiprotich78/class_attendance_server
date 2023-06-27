@@ -6,14 +6,22 @@ const getAllLessons = async (req, res)=>{
     const unitID = req.params.unitId;
 
     try{
-        const existingUnitId = await UnitModel.findById({_id: new mongoose.Types.ObjectId(unitID)})
-
-        if(!existingUnitId){
+        let unitId;
+        try{
+            unitId = new mongoose.Types.ObjectId(unitID);
+        }
+        catch(error){
             return res.status(400).json({Error: "Invalid Unit Id"})
         }
 
+        const existingUnitId = await UnitModel.findById({_id: unitId})
+
+        if(!existingUnitId){
+            return res.status(400).json({Error: "Unit Id Not Found"})
+        }
+
         if(existingUnitId.lecturerId !== req.body.lecturerId){
-            return res.status(400).json({Error: "Invalid Unit Id"});
+            return res.status(400).json({Error: "Unit Id Not Found"});
         }
 
         const lessons = await LessonModel.find({unitID});
