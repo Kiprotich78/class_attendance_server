@@ -16,7 +16,6 @@ const getAllLessons = async (req, res)=>{
 
         const existingUnitId = await UnitModel.findById({_id: unitId})
 
-        console.log(existingUnitId);
         if(!existingUnitId){
             return res.status(400).json({Error: "Unit Id Not Found"})
         }
