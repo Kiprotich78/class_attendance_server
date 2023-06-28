@@ -1,7 +1,5 @@
 const { mongoose } = require('mongoose');
-const StudentModel = require('../models/studentModel')
 const StudentsUnitModel = require('../models/studentUnitsModel')
-const UnitModel = require('../models/unitModel')
 const LessonModel = require('../models/lessonModel')
 
 
@@ -46,10 +44,6 @@ const getStudentLessons = async (req, res)=>{
                 lessons: lessonArray
             })
         }
-
-
-
-        
 
         return res.status(200).json({
             _id: studentId,
