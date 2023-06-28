@@ -8,9 +8,9 @@ const addUnit = async (req, res)=>{
             return res.status(400).json({Error: "Unit name is Required"})
         }
 
-        const existingUnits = await UnitModel.find({name})
+        const existingUnit = await UnitModel.findOne({name})
 
-        if(existingUnits.some(existingUnit => existingUnit.lecturerId === lecturerId)){
+        if(existingUnit){
             return res.status(409).json({Error: "Unit already Exists"})
         }
 
