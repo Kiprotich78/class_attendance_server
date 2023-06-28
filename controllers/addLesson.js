@@ -11,9 +11,7 @@ const addLesson = async (req, res)=>{
     }
 
     try{
-        console.log(unitID);
         const checkUnitId = await UnitModel.findOne({ _id: new mongoose.Types.ObjectId(unitID) });
-        console.log(checkUnitId);
 
         if(!checkUnitId){
             return res.status(400).json({Error: "Invalid Unit Id"});

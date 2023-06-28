@@ -19,7 +19,7 @@ const getStudentsUnits = async (req, res)=>{
             return res.status(400).json({Error: "Student not found in our database"})
         }
 
-        if(existingStudent.lecturerId !== req.body.lecturerId){
+        if(existingStudent.lecturerId.toString() !== req.body.lecturerId){
             return res.status(400).json({Error: "Student not found"})
         }
 
