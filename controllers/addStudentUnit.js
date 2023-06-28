@@ -11,7 +11,7 @@ const addStudentUnit = async (req, res)=>{
     }
     try{
         const availableStudent = await StudentModel.find({lecturerId});
-        if(!availableStudent.some(student => student.lecturerId === lecturerId)){
+        if(!availableStudent.some(student => student.lecturerId.toString() === lecturerId)){
             return res.status(400).json({Error: "Student Not Found"})
         }
 
@@ -28,7 +28,7 @@ const addStudentUnit = async (req, res)=>{
         }
 
         const existingUnit = await StudentsUnitModel.find({student: studentId})
-        if(existingUnit.some(unit => unit.unit === unitID)){
+        if(existingUnit.some(unit => unit.unit.toString() === unitID)){
             return res.status(409).json({Error: 'Student is already enrolled to this unit'});
         }
 
