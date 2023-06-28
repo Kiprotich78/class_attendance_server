@@ -3,7 +3,7 @@ const { Schema } = Mongoose;
 
 const studentSchema = new Schema({
     lecturerId: {
-        type: String,
+        type: Schema.Types.ObjectId,
         ref: "lecturer",
         required: true,
     },

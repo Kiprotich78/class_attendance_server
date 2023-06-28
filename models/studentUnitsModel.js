@@ -2,12 +2,12 @@ const mongoose = require('mongoose');
 
 const studentUnitSchema = new mongoose.Schema({
   student: {
-    type: String,
+    type: mongoose.Schema.Types.ObjectId,
     ref: 'Student',
     required: true
   },
   unit: {
-    type: String,
+    type: mongoose.Schema.Types.ObjectId,
     ref: 'Unit',
     required: true
   }

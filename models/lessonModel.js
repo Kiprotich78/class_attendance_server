@@ -7,7 +7,7 @@ const lessonSchema  = new Schema({
         required: true
       },
     unitID: {
-        type: String,
+        type: Schema.Types.ObjectId,
         ref: "Unit",
         required: true
     },
