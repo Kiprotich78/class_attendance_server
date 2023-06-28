@@ -34,8 +34,8 @@ const studentSchema = new Schema({
     phone: {
         type: Number,
         required: true,
-        min: 1000000000,
-        max: 9999999999
+        min: 100000000,
+        max: 999999999
     },
     gender: {
         type: String,
