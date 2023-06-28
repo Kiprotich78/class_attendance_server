@@ -16,11 +16,12 @@ const getAllLessons = async (req, res)=>{
 
         const existingUnitId = await UnitModel.findById({_id: unitId})
 
+        console.log(existingUnitId);
         if(!existingUnitId){
             return res.status(400).json({Error: "Unit Id Not Found"})
         }
 
-        if(existingUnitId.lecturerId !== req.body.lecturerId){
+        if(existingUnitId.lecturerId.toString() !== req.body.lecturerId){
             return res.status(400).json({Error: "Unit Id Not Found"});
         }
 
