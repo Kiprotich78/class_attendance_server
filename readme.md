@@ -52,3 +52,6 @@ Once you have installed the dependencies and set up the environmental variables,
 The server will start running on the specified port, and you should see a message in the console indicating that the server has started successfully.
 
 
+## API Documentation
+
+For detailed information about the API endpoints and how to use them, please refer to the [API Documentation](apiDocumentation.md).
