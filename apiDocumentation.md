@@ -6,13 +6,13 @@ This document provides detailed information about the endpoints available in the
 
 Authenticate a user and obtain an access token.
 
-- **URL**: `/login`
+- **URL**: `/api/login`
 - **Method**: `POST`
 - **Request Body**:
 
   | Field    | Type     | Description             |
   | -------- | -------- | ----------------------- |
-  | username | `string` | The user's username     |
+  | email    | `email`  | The user's email address|
   | password | `string` | The user's password     |
 
 - **Response**:
@@ -31,24 +31,24 @@ Authenticate a user and obtain an access token.
 - **Example** (JavaScript `fetch`):
 
   ```javascript
-    fetch('http://localhost:4444/login', {
+    fetch('http://localhost:4444/api/login', {
         method: 'POST',
         headers: {
         'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-        username: 'john_doe',
-        password: 'secretpassword'
+            email: 'kiprotich78@gmail.com',
+            password: 'pass1234'
         })
     })
         .then(response => response.json())
         .then(data => {
-        // Access token received
-        console.log(data.accessToken);
+            // Access token received
+            console.log(data.accessToken);
         })
         .catch(error => {
-        // Handle error
-        console.error(error);
+            // Handle error
+            console.error(error);
         });
    ```
 
