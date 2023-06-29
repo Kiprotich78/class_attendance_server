@@ -1,6 +1,6 @@
 const { mongoose } = require('mongoose');
-const StudentsUnitModel = require('../models/studentUnitsModel')
-const LessonModel = require('../models/lessonModel')
+const StudentsUnitModel = require('../../models/studentUnitsModel')
+const LessonModel = require('../../models/lessonModel')
 
 
 const getStudentLessons = async (req, res)=>{

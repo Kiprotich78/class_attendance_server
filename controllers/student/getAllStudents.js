@@ -1,4 +1,4 @@
-const studentModel = require('../models/studentModel');
+const studentModel = require('../../models/studentModel');
 
 const getAllStudents = async (req, res)=>{
     const lecturerId = req.body.lecturerId;

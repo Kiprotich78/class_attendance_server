@@ -1,4 +1,4 @@
-const UnitModel = require('../models/unitModel')
+const UnitModel = require('../../models/unitModel')
 
 
 const getAllUnits = async (req, res)=> {

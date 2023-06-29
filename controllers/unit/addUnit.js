@@ -1,4 +1,4 @@
-const UnitModel = require('../models/unitModel');
+const UnitModel = require('../../models/unitModel');
 
 const addUnit = async (req, res)=>{
     const {lecturerId, name} = req.body;
