@@ -12,6 +12,7 @@ const addStudentUnit = require('../controllers/addStudentUnit')
 const getStudentUnits = require('../controllers/getStudentUnits')
 const getStudentlessons = require('../controllers/getStudentLessons')
 const generateQRcode = require('../controllers/generateQRcode')
+const takeStudentAttendance = require('../controllers/takeStudentAttendance')
 
 const addUnit = require('../controllers/addUnit')
 const getAllUnits = require('../controllers/getAllUnits')
@@ -28,7 +29,8 @@ router.get('/getAllStudents', auth, getAllStudents)
 router.post('/addStudentUnit/:studId', auth, addStudentUnit)
 router.get('/getStudentUnits/:studId', auth, getStudentUnits)
 router.get('/getStudentLessons/:studId', auth, getStudentlessons)
-router.get("/grcode", auth, generateQRcode);
+router.get('/grcode', auth, generateQRcode);
+router.post('/attendance', takeStudentAttendance)
 
 router.post('/addUnit', auth, addUnit)
 router.get('/getAllUnits', auth, getAllUnits);

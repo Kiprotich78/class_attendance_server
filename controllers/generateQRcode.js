@@ -7,6 +7,7 @@ const generateQRcode = async (req, res)=>{
     try {
         const unitID = req.query.unitId; 
         const lessonID = req.query.lessonId; 
+        const lecturerId = req.body.lecturerId;
 
         let unitId, lessonId;
 
@@ -34,15 +35,14 @@ const generateQRcode = async (req, res)=>{
             return res.status(400).json({Error: "Lesson not available in our database"})
         }
 
-        const jsonData = {unitID, lessonID};
+        const jsonData = {lecturerId, unitID, lessonID};
         const jsonText = JSON.stringify(jsonData);
 
         const url = await QrCode.toDataURL(jsonText);
     
         res.send({
             msg: "success", 
-            imgUrl: url, 
-            htmlImgUrl: `<img src="${url}" alt="QR Code" />`
+            imgUrl: url
         });
 
     } catch (err) {
