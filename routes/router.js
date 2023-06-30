@@ -19,6 +19,7 @@ const getAllUnits = require('../controllers/unit/getAllUnits')
 const addLesson = require('../controllers/unit/addLesson')
 const getAllLessons = require('../controllers/unit/getAllLessons')
 
+const {filterByUnit, filterByDate} = require('../controllers/viewAttendance')
 
 router.post('/login', logIn)
 router.post('/signup', signup)
@@ -38,5 +39,8 @@ router.get('/getAllUnits', auth, getAllUnits);
 router.post('/addlesson/:unitId', auth, addLesson)
 router.get('/getAllLessons/:unitId', auth, getAllLessons)
 
+// attendance routes
+router.get('/filterByUnit/:unitId', auth, filterByUnit)
+router.get('/filterByDate/:unitId', auth, filterByDate)
 
 module.exports = router;
