@@ -27,8 +27,16 @@ Authenticate a user and obtain an access token.
   - **Content**:
 
   ```json
-  {
-    "accessToken": "<access-token>"
+  { 
+    "message": "success",
+    "lecturer": {
+        "_id": "64985f3b7c9a347ae6e758ea",
+        "firstName": "Kipro",
+        "lastName": "shadrack",
+        "email": "shadrackr058@gmail.com"
+    },
+    "accessToken": "<accessToken>"
+
   }
   ```
 
