@@ -4,6 +4,7 @@ This document provides detailed information about the endpoints available in the
 
 - [Log In](#login)
 - [Sign Up](#signup)
+- [Add Student](#add-student)
 
 ---
 
@@ -116,3 +117,62 @@ Create a new user account.
 
    ```
 
+## Add Student
+
+Add a new student to the system. Authorization is required to access this endpoint.
+
+- **URL**: `/students`
+- **Method**: `POST`
+- **Headers**:
+  - `Authorization: <access-token>` (Required)
+
+- **Request Body**:
+
+  | Field      | Type     | Description               |
+  | ---------- | -------- | ------------------------- |
+  | firstName  | `string` | The student's first name   |
+  | lastName   | `string` | The student's last name    |
+  | email      | `string` | The student's email address|
+  | phone      | `number` | The student's phone number |
+  | gender     | `string` | The student's gender       |
+
+- **Response**:
+
+  - **Status Code**: `201 Created`
+  - **Content**: N/A
+
+  - **Description**: Upon successful student creation, the server responds with a status code of `201 Created`.
+
+- **Example** (JavaScript `fetch`):
+
+  ```javascript
+  const accessToken = "<access-token>";
+
+  fetch('http://localhost:4444/addstudent', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `${accessToken}`
+    },
+    body: JSON.stringify({
+      firstName: 'Ostine',
+      lastName: 'Kipkemoi',
+      email: 'ostoo@gmail.com',
+      phone: 716009182,
+      gender: 'Male'
+    })
+  })
+    .then(response => {
+      if (response.status === 201) {
+        console.log('Student added successfully');
+      } else if (response.status === 401) {
+        console.log('Authorization failed');
+      } else {
+        console.log('An error occurred');
+      }
+    })
+    .catch(error => {
+      console.error(error);
+    });
+
+    ```
