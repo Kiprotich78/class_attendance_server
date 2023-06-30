@@ -1,6 +1,7 @@
 const express = require('express');
 const morgan = require('morgan');
 const Mongoose = require('mongoose')
+const cors = require('cors');
 require('dotenv').config();
 
 const routers = require('./routes/router');
@@ -9,6 +10,7 @@ const routers = require('./routes/router');
 const app = express();
 
 // Middleware
+app.use(cors())
 app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
