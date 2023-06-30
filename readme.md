@@ -55,3 +55,7 @@ The server will start running on the specified port, and you should see a messag
 ## API Documentation
 
 For detailed information about the API endpoints and how to use them, please refer to the [API Documentation](apiDocumentation.md).
+
+## Contributor
+
+- Kiprotich Shadrack [kiprotich78](https://github.com/kiprotich78)
