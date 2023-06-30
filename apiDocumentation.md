@@ -62,7 +62,7 @@ Authenticate a user and obtain an access token.
 
 Create a new user account.
 
-- **URL**: `/api/login`
+- **URL**: `/api/signup`
 - **Method**: `POST`
 - **Request Body**:
 
