@@ -69,7 +69,7 @@ Create a new user account.
 
 - **Response**:
 
-  - **Status Code**: `200 OK`
+  - **Status Code**: `201 Created`
   - **Content**:
 
   ```json
