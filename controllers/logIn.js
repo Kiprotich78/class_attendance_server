@@ -23,7 +23,16 @@ const logIn = async (req, res)=>{
 
         const accessToken = jwt.sign({userId: existingUser._id}, process.env.SECRET_KEY, { expiresIn: '1h' });
 
-        res.status(200).json({accessToken});
+        res.status(200).json({
+            message: "success",
+            lecturer: {
+                _id: existingUser._id,
+                firstName: existingUser.firstName,
+                lastName: existingUser.lastName,
+                email: existingUser.email,
+            },
+            accessToken
+        });
 
     }
     catch(error){
