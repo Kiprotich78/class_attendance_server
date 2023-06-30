@@ -52,5 +52,62 @@ Authenticate a user and obtain an access token.
         });
    ```
 
+## SignUp
 
+Create a new user account.
+
+- **URL**: `/api/login`
+- **Method**: `POST`
+- **Request Body**:
+
+  | Field    | Type     | Description             |
+  | -------- | -------- | ----------------------- |
+  | firstName| `string` | The user's first name   |
+  | lastName | `string` | The user's last Name    |
+  | email    | `email`  | The user's email address|
+  | password | `string` | The user's password     |
+
+- **Response**:
+
+  - **Status Code**: `200 OK`
+  - **Content**:
+
+  ```json
+    {
+      "message": "User created successfully",
+      "user": {
+          "firstName": "Kiprotich",
+          "lastName": "shadrack",
+          "email": "shadrackr059@gmail.com"
+      }
+    }
+  ```
+
+- **Description**: Upon successful user creation, a success message is returned along with the user details.
+
+- **Example** (JavaScript `fetch`):
+
+  ```javascript
+   fetch('http://localhost:4444/api/signup', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      firstName: 'Kiprotich',
+      lastName: 'Shadrack',
+      email: 'shadrackr059@gmail.com',
+      password: 'secretpassword'
+    })
+  })
+  .then(response => response.json())
+  .then(data => {
+    console.log(data.message); // User created successfully
+    console.log(data.user); // { firstName: "Kiprotich", lastName: "Shadrack", email: "shadrackr059@gmail.com" }
+  })
+  .catch(error => {
+    console.error(error);
+  });
+
+   ```
 
