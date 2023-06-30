@@ -2,6 +2,11 @@
 
 This document provides detailed information about the endpoints available in the Class Attendance Register server.
 
+- [Log In](#login)
+- [Sign Up](#signup)
+
+---
+
 ## Login
 
 Authenticate a user and obtain an access token.
