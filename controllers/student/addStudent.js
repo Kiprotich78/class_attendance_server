@@ -11,7 +11,7 @@ const addStudent = async (req, res)=>{
 
         const students = await Student.find({email});
 
-        if (students.some((student) => student.lecturerId === lecturerId)) {
+        if (students.some((student) => student.lecturerId.toString() === lecturerId)) {
             return res.status(409).json({
               Error: "Student Already Exists",
             });
@@ -32,7 +32,18 @@ const addStudent = async (req, res)=>{
 
         const saveStudent = await student.save();
 
-        return res.status(201).json(saveStudent);
+        if(saveStudent){
+            return res.status(201).json({
+                message: "Student Added successfully",
+                student: {
+                    firstName,
+                    lastName,
+                    email,
+                    regNo
+                }
+            });
+        }
+
         
     }
     catch(error){
