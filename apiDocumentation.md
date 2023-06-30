@@ -121,7 +121,7 @@ Create a new user account.
 
 Add a new student to the system. Authorization is required to access this endpoint.
 
-- **URL**: `/students`
+- **URL**: `/api/addstudent`
 - **Method**: `POST`
 - **Headers**:
   - `Authorization: <access-token>` (Required)
@@ -139,7 +139,19 @@ Add a new student to the system. Authorization is required to access this endpoi
 - **Response**:
 
   - **Status Code**: `201 Created`
-  - **Content**: N/A
+  - **Content**: 
+      ```json
+        {
+          "message": "Student added successfully",
+          "student": {
+            "firstName": "Ostine",
+            "lastName": "Kipkemoi",
+            "email": "ostoo@gmail.com",
+            "regNo": "stud-0006"
+          }
+        }
+
+      ```
 
   - **Description**: Upon successful student creation, the server responds with a status code of `201 Created`.
 
@@ -163,13 +175,8 @@ Add a new student to the system. Authorization is required to access this endpoi
     })
   })
     .then(response => {
-      if (response.status === 201) {
-        console.log('Student added successfully');
-      } else if (response.status === 401) {
-        console.log('Authorization failed');
-      } else {
-        console.log('An error occurred');
-      }
+      console.log(data.message); // Student added successfully
+      console.log(data.student); // { firstName: "Ostine", lastName: "Kipkemoi", email: "ostoo@gmail.com", regNo: "stud-0006" }
     })
     .catch(error => {
       console.error(error);
