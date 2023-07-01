@@ -91,21 +91,145 @@ const filterByUnit = async (req, res)=>{
     }
 }
 
-const filterByDate = (req, res)=>{
+const filterByDate = async (req, res)=>{
     const lecturerId = req.body.lecturerId
     const date = req.params.date
 
     try{
-        if(!checkDate(date)){
+        const dateIso = checkDate(date)
+        if(!dateIso){
             return res.status(400).json({Error: "Invalid date input"})
         }
 
-        return res.status(400).json("success")
+        // filter attendance by date and lectuerId
+        const filteredAttendance = await AttendanceModel.find({
+            createdAt: { $gte: dateIso, $lt: new Date(dateIso).setHours(24) },
+            lecturerId
+        }).populate("unitId").populate("lessonId");
+
+
+        let arraysByUnitId = {}; 
+
+
+        // devide attendance into different arrays by unit id
+        for(let i = 0; i < filteredAttendance.length; i++){
+            const singleAttendance = filteredAttendance[i]
+            const unit = filteredAttendance[i].unitId._id
+
+            if(!arraysByUnitId[unit]){
+                arraysByUnitId[unit] = []
+            }
+
+           
+            arraysByUnitId[unit].push(singleAttendance)
+
+        }
+
+        let outputDate = [] 
+
+        for (const key in arraysByUnitId) {
+            if (arraysByUnitId.hasOwnProperty(key)) {
+                const lecturerStudents = await StudentModel.find({ lecturerId });
+                const filteredStudentUnits = await StudentUnitsModel.find({ unit: key });
+
+                console.log(arraysByUnitId)
+                let outputUnits = {
+                    // _id: arraysByUnitId[key].unitId._id,
+                    // unitName:  arraysByUnitId[key].unitId.name,
+                    lessons: []
+                }
+
+                const lessonIds = []
+                // Exctact lessons thought on that day
+                arraysByUnitId[key].forEach(attendance => {
+                    if(!lessonIds.find(lesson => lesson === attendance.lessonId._id.toString())){
+                        lessonIds.push(attendance.lessonId._id.toString())
+                    }
+                })
+
+                // Find the students taking the unit
+                const filteredStudentsTakingTheUnit = lecturerStudents.filter((student) => {
+                    return filteredStudentUnits.find((unit) => {
+                        return student._id.toString() === unit.student.toString();
+                    });
+                });
+
+                lessonIds.forEach(lesson => {
+                    // return attendances with a perticular lesson
+                    const filterAttendancePerLesson = arraysByUnitId[key].filter(attendance => {
+                        return attendance.lessonId._id.toString() === lesson;
+                    })
+
+                    let presentStudents = 0;
+
+                    // check if the student is present
+                    const confirmStudentAttendance = filteredStudentsTakingTheUnit.map(student =>{
+                        if(filterAttendancePerLesson.find(lessonAttendance => student._id.toString() === lessonAttendance.studentId.toString())){
+                            presentStudents += 1;
+                            // returns true if the student is present
+                            return {
+                                _id: student._id,
+                                firstName: student.firstName,
+                                lastName: student.lastName,
+                                registationNumber: student.registrationNumber,
+                                email: student.email,
+                                gender: student.gender,
+                                phone: student.phone,
+                                present: true
+        
+                            }
+                        }
+                        
+                        // returns true if the student is present
+                        return {
+                            _id: student._id,
+                            firstName: student.firstName,
+                            lastName: student.lastName,
+                            registationNumber: student.registrationNumber,
+                            email: student.email,
+                            gender: student.gender,
+                            phone: student.phone,
+                            present: false
+        
+                        }
+                    })
+
+                //    console.log({
+                //         _id: filterAttendancePerLesson[0].lessonId._id,
+                //         lesson: filterAttendancePerLesson[0].lessonId.lessonName,
+                //         allStudents: filteredStudentsTakingTheUnit.length,
+                //         presentStudents,
+                //         absentStudents: filteredStudentsTakingTheUnit.length - presentStudents,
+                //         date: filterAttendancePerLesson[0].lessonId.date,
+                //         students: confirmStudentAttendance
+                //     })
+
+                    outputUnits.lessons.push({
+                        _id: filterAttendancePerLesson[0].lessonId._id,
+                        lesson: filterAttendancePerLesson[0].lessonId.lessonName,
+                        allStudents: filteredStudentsTakingTheUnit.length,
+                        presentStudents,
+                        absentStudents: filteredStudentsTakingTheUnit.length - presentStudents,
+                        date: filterAttendancePerLesson[0].lessonId.date,
+                        students: confirmStudentAttendance
+                    })
+
+                })
+            
+                // outputDate.push(outputUnits);
+
+                // console.log(outputUnits)
+                
+            }
+        }     
+        
+
+        // return res.status(200).json(outputDate)
 
 
     }
     catch(error){
-        return res.status(400).json({Error: "Somethig went wrong"});
+        return res.status(400).json({Error: error});
     }
 
 }
@@ -150,7 +274,7 @@ function checkDate(date) {
     }
   
     // If all checks pass, the date is considered valid
-    return true;
+    return inputDate.toISOString();
   }
   
 module.exports = {
