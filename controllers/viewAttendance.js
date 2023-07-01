@@ -75,6 +75,7 @@ const filterByUnit = async (req, res)=>{
             outputArray.push({
                 _id: lesson._id,
                 lesson: lesson.lessonName,
+                date: lesson.date,
                 allStudents: filteredStudentsTakingTheUnit.length,
                 presentStudents,
                 absentStudents: filteredStudentsTakingTheUnit.length - presentStudents,
