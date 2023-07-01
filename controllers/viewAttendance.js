@@ -17,7 +17,8 @@ const filterByUnit = async (req, res)=>{
 
         const lecturerStudents = await StudentModel.find({ lecturerId });
         const filteredStudentUnits = await StudentUnitsModel.find({ unit: unitID });
-        
+
+        // Find the students taking the unit
         const filteredStudentsTakingTheUnit = lecturerStudents.filter((student) => {
           return filteredStudentUnits.find((unit) => {
             return student._id.toString() === unit.student.toString();
@@ -28,16 +29,22 @@ const filterByUnit = async (req, res)=>{
         const allLessons = await LessonModel.find({unitID}) 
         
         let outputArray = [];
+
+        // check if the student was present or not
         allLessons.forEach(lesson =>{
-            console.log(lesson.lessonName)
+
+            // return attendances with a perticular lesson
             const filterAttendancePerLesson = filteredAttendance.filter(attendance => {
                 return attendance.lessonId.toString() === lesson._id.toString()
             })
 
             let presentStudents = 0;
+
+            // check if the student is present
             const confirmStudentAttendance = filteredStudentsTakingTheUnit.map(student =>{
                 if(filterAttendancePerLesson.find(lessonAttendance => student._id.toString() === lessonAttendance.studentId.toString())){
                     presentStudents += 1;
+                    // returns true if the student is present
                     return {
                         _id: student._id,
                         firstName: student.firstName,
@@ -50,7 +57,8 @@ const filterByUnit = async (req, res)=>{
 
                     }
                 }
-
+                
+                // returns true if the student is present
                 return {
                     _id: student._id,
                     firstName: student.firstName,
