@@ -41,6 +41,6 @@ router.get('/getAllLessons/:unitId', auth, getAllLessons)
 
 // attendance routes
 router.get('/filterByUnit/:unitId', auth, filterByUnit)
-router.get('/filterByDate/:unitId', auth, filterByDate)
+router.get('/filterByDate/:date', auth, filterByDate)
 
 module.exports = router;

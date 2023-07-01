@@ -92,9 +92,67 @@ const filterByUnit = async (req, res)=>{
 }
 
 const filterByDate = (req, res)=>{
+    const lecturerId = req.body.lecturerId
+    const date = req.params.date
+
+    try{
+        if(!checkDate(date)){
+            return res.status(400).json({Error: "Invalid date input"})
+        }
+
+        return res.status(400).json("success")
+
+
+    }
+    catch(error){
+        return res.status(400).json({Error: "Somethig went wrong"});
+    }
 
 }
 
+function checkDate(date) {
+    // Convert the date to string and extract the year, month, and day
+    let dateStr = date.toString();
+    let year = parseInt(dateStr.slice(0, 4), 10);
+    let month = parseInt(dateStr.slice(4, 6), 10);
+    let day = parseInt(dateStr.slice(6, 8), 10);
+  
+    // Perform validation checks
+    if (year < 1 || year > 9999) {
+      return false;
+    }
+    if (month < 1 || month > 12) {
+      return false;
+    }
+    if (day < 1 || day > 31) {
+      return false;
+    }
+  
+    // Additional checks for specific months and days
+    if ([4, 6, 9, 11].includes(month) && day > 30) {
+      return false;
+    }
+    if (month === 2) {
+      if ((year % 4 === 0 && year % 100 !== 0) || year % 400 === 0) {
+        if (day > 29) {
+          return false;
+        }
+      } else if (day > 28) {
+        return false;
+      }
+    }
+  
+    // Check if the date is greater than today's date
+    let today = new Date();
+    let inputDate = new Date(year, month - 1, day);
+    if (inputDate > today) {
+      return false;
+    }
+  
+    // If all checks pass, the date is considered valid
+    return true;
+  }
+  
 module.exports = {
     filterByUnit,
     filterByDate
