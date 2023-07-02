@@ -109,6 +109,7 @@ const filterByDate = async (req, res)=>{
 
 
         let arraysByUnitId = {}; 
+        let totalUnits = 0;
 
 
         // devide attendance into different arrays by unit id
@@ -118,6 +119,7 @@ const filterByDate = async (req, res)=>{
 
             if(!arraysByUnitId[unit]){
                 arraysByUnitId[unit] = []
+                totalUnits ++;
             }
 
            
@@ -125,7 +127,11 @@ const filterByDate = async (req, res)=>{
 
         }
 
-        let outputData = [] 
+        let outputData = {
+            message: "success",
+            totalUnits: totalUnits,
+            units: []
+        }
        
 
         for (const key in arraysByUnitId) {
@@ -206,7 +212,7 @@ const filterByDate = async (req, res)=>{
 
                 })
             
-                outputData.push(outputUnits);
+                outputData.units.push(outputUnits);
                 
             }
         }     
