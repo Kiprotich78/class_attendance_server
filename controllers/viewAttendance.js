@@ -125,17 +125,17 @@ const filterByDate = async (req, res)=>{
 
         }
 
-        let outputDate = [] 
+        let outputData = [] 
+       
 
         for (const key in arraysByUnitId) {
             if (arraysByUnitId.hasOwnProperty(key)) {
                 const lecturerStudents = await StudentModel.find({ lecturerId });
                 const filteredStudentUnits = await StudentUnitsModel.find({ unit: key });
 
-                console.log(arraysByUnitId)
                 let outputUnits = {
-                    // _id: arraysByUnitId[key].unitId._id,
-                    // unitName:  arraysByUnitId[key].unitId.name,
+                    _id: arraysByUnitId[key][0].unitId._id,
+                    unitName:  arraysByUnitId[key][0].unitId.name,
                     lessons: []
                 }
 
@@ -194,16 +194,6 @@ const filterByDate = async (req, res)=>{
                         }
                     })
 
-                //    console.log({
-                //         _id: filterAttendancePerLesson[0].lessonId._id,
-                //         lesson: filterAttendancePerLesson[0].lessonId.lessonName,
-                //         allStudents: filteredStudentsTakingTheUnit.length,
-                //         presentStudents,
-                //         absentStudents: filteredStudentsTakingTheUnit.length - presentStudents,
-                //         date: filterAttendancePerLesson[0].lessonId.date,
-                //         students: confirmStudentAttendance
-                //     })
-
                     outputUnits.lessons.push({
                         _id: filterAttendancePerLesson[0].lessonId._id,
                         lesson: filterAttendancePerLesson[0].lessonId.lessonName,
@@ -216,15 +206,13 @@ const filterByDate = async (req, res)=>{
 
                 })
             
-                // outputDate.push(outputUnits);
-
-                // console.log(outputUnits)
+                outputData.push(outputUnits);
                 
             }
         }     
         
 
-        // return res.status(200).json(outputDate)
+        return res.status(200).json(outputData)
 
 
     }
