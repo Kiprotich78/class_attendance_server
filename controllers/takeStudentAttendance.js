@@ -48,7 +48,7 @@ const takeStudentAttendance = async (req, res)=>{
         const savedAttendance = await attendance.save()
 
         return res.status(200).json({
-            Msg: "Attendance taken successfully", 
+            message: "Attendance taken successfully", 
             attendance: savedAttendance
         });
     }
