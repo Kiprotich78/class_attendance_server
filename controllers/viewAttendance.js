@@ -139,12 +139,6 @@ const filterByDate = async (req, res)=>{
                 const lecturerStudents = await StudentModel.find({ lecturerId });
                 const filteredStudentUnits = await StudentUnitsModel.find({ unit: key });
 
-                let outputUnits = {
-                    _id: arraysByUnitId[key][0].unitId._id,
-                    unitName:  arraysByUnitId[key][0].unitId.name,
-                    lessons: []
-                }
-
                 const lessonIds = []
                 // Exctact lessons thought on that day
                 arraysByUnitId[key].forEach(attendance => {
@@ -152,6 +146,13 @@ const filterByDate = async (req, res)=>{
                         lessonIds.push(attendance.lessonId._id.toString())
                     }
                 })
+
+                let outputUnits = {
+                    _id: arraysByUnitId[key][0].unitId._id,
+                    unitName:  arraysByUnitId[key][0].unitId.name,
+                    totalLessons: lessonIds.length,
+                    lessons: []
+                }
 
                 // Find the students taking the unit
                 const filteredStudentsTakingTheUnit = lecturerStudents.filter((student) => {
