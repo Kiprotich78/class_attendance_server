@@ -13,6 +13,7 @@ This document provides detailed information about the endpoints available in the
 - [Unit Routes](#unit-routes)
   - [Add Unit](#add-unit)
   - [View All Units](#view-all-units)
+  - [Add Lesson To Unit](#add-lesson-to-unit)
 ---
 
 ### Login
@@ -649,4 +650,72 @@ Retrieve all units from the system. Authorization is required to access this end
         console.error(error);
       });
   ```
+
+### Add Lesson To Unit
+
+Add a new lesson to a specific unit. Authorization is required to access this endpoint.
+
+- **URL**: `/api/addLesson/:unitId`
+- **Method**: `POST`
+- **Headers**:
+  - `Authorization: <access-token>` (Required)
+
+- **URL Parameters**:
+  - `unitId` (Required): The ID of the unit to which the lesson will be added.
+
+- **Request Body**:
+
+  | Field       | Type            | Description                                 |
+  | ----------- | --------        | --------------------------------------------|
+  | lessonName  | `string`        | The name of the lesson                      | 
+  | date        | `dateISOString` | The date of the lesson                      |
+  | startTime   | `string`        | The start time of the lesson (e.g., "0900") |
+  | duration    | `string`        | The duration of the lesson in minutes       |
+
+- **Response**:
+
+  - **Status Code**: `200 OK`
+  - **Content**: 
+      ```json
+      {
+        "msg": "Lesson Added Successfully",
+        "lesson": {
+          "_id": "64a56c8d83ae88c26c22f0f6",
+          "unitId": "649c79f98f38a5a3ea9a2877",
+          "lessonName": "Lesson One",
+          "date": "2023-07-28T08:00:00.627Z",
+          "startTime": "0900",
+          "duration": "60"
+        }
+      }
+      ```
+
+  - **Description**: Returns a success message and the details of the newly added lesson.
+
+- **Example** (JavaScript `fetch`):
+
+  ```javascript
+  const accessToken = "<access-token>";
+  const unitId = "649c79f98f38a5a3ea9a2877";
+
+  fetch(`http://localhost:4444/api/addLesson/${unitId}`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `${accessToken}`
+    },
+    body: JSON.stringify({
+      lessonName: 'Lesson One',
+      date: '2023-07-28T08:00:00.627Z',
+      startTime: '0900',
+      duration: '60'
+    })
+  })
+    .then(response => response.json())
+    .then(data => {
+      console.log(data);
+    })
+    .catch(error => {
+      console.error(error);
+    });
 
