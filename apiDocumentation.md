@@ -19,6 +19,7 @@ This document provides detailed information about the endpoints available in the
   - [Generate QR Code](#generate-qr-code)
   - [Take Student Attendance](#take-student-attendance)
   - [Filter Attendance By Unit](#filter-attendance-by-unit)
+  - [Filter Attendance By Date](#filter-attendance-by-date)
 ---
 
 ### Login
@@ -1047,3 +1048,226 @@ Retrieve all lessons belonging to a specific unit. Authorization is required to 
       .catch(error => {
         console.error(error);
       });
+
+
+### Filter Attendance by Date
+
+This API endpoint retrieves the attendance records for a specific date. It provides information about the units taught on that day, including the lessons within each unit and the students who attended each lesson
+
+- **URL**: `/api/filterByDate/:date`
+- **Method**: `GET`
+- **Headers**:
+  - `Authorization: <access-token>` (Required)
+
+- **Query Parameters**:
+  - `date` (Required): The date for which to filter the attendance. Format: `YYYYMMDD`.
+
+- **Response**:
+
+  - **Status Code**: `200 OK`
+  - **Content**: 
+    ```json
+      {
+      "message": "success",
+      "totalUnits": 2,
+      "units": [
+          {
+              "_id": "649c79f38f38a5a3ea9a2873",
+              "unitName": "Unit One",
+              "totalLessons": 2,
+              "lessons": [
+                  {
+                      "_id": "649c7c77d4441b991aa4d6c3",
+                      "lesson": "lesson One",
+                      "allStudents": 4,
+                      "presentStudents": 2,
+                      "absentStudents": 2,
+                      "date": "2023-07-28T08:00:00.627Z",
+                      "students": [
+                          {
+                              "_id": "649c79218f38a5a3ea9a285c",
+                              "firstName": "hilda",
+                              "lastName": "cherotich",
+                              "registationNumber": "stud-0001",
+                              "email": "hilda@gmail.com",
+                              "gender": "Female",
+                              "phone": 716009182,
+                              "present": true
+                          },
+                          {
+                              "_id": "649c79648f38a5a3ea9a2861",
+                              "firstName": "Kiprotich",
+                              "lastName": "shadrack",
+                              "registationNumber": "stud-0002",
+                              "email": "kipro@gmail.com",
+                              "gender": "Male",
+                              "phone": 716009182,
+                              "present": true
+                          },
+                          {
+                              "_id": "649c79768f38a5a3ea9a2866",
+                              "firstName": "sururu",
+                              "lastName": "alex",
+                              "registationNumber": "stud-0003",
+                              "email": "sururu@gmail.com",
+                              "gender": "Male",
+                              "phone": 716009182,
+                              "present": false
+                          },
+                          {
+                              "_id": "64a1d4af6de161f0ac7b24a9",
+                              "firstName": "shadrack",
+                              "lastName": "kiprotich",
+                              "registationNumber": "stud-0007",
+                              "email": "shadrackr057@gmail.com",
+                              "gender": "Male",
+                              "phone": 716009182,
+                              "present": false
+                          }
+                      ]
+                  },
+                  {
+                      "_id": "649c7d0e5655dc0f01b695ef",
+                      "lesson": "lesson Two",
+                      "allStudents": 4,
+                      "presentStudents": 2,
+                      "absentStudents": 2,
+                      "date": "2023-07-28T08:00:00.627Z",
+                      "students": [
+                          {
+                              "_id": "649c79218f38a5a3ea9a285c",
+                              "firstName": "hilda",
+                              "lastName": "cherotich",
+                              "registationNumber": "stud-0001",
+                              "email": "hilda@gmail.com",
+                              "gender": "Female",
+                              "phone": 716009182,
+                              "present": true
+                          },
+                          {
+                              "_id": "649c79648f38a5a3ea9a2861",
+                              "firstName": "Kiprotich",
+                              "lastName": "shadrack",
+                              "registationNumber": "stud-0002",
+                              "email": "kipro@gmail.com",
+                              "gender": "Male",
+                              "phone": 716009182,
+                              "present": true
+                          },
+                          {
+                              "_id": "649c79768f38a5a3ea9a2866",
+                              "firstName": "sururu",
+                              "lastName": "alex",
+                              "registationNumber": "stud-0003",
+                              "email": "sururu@gmail.com",
+                              "gender": "Male",
+                              "phone": 716009182,
+                              "present": false
+                          },
+                          {
+                              "_id": "64a1d4af6de161f0ac7b24a9",
+                              "firstName": "shadrack",
+                              "lastName": "kiprotich",
+                              "registationNumber": "stud-0007",
+                              "email": "shadrackr057@gmail.com",
+                              "gender": "Male",
+                              "phone": 716009182,
+                              "present": false
+                          }
+                      ]
+                  }
+              ]
+          },
+          {
+              "_id": "649c79f98f38a5a3ea9a2877",
+              "unitName": "Unit Two",
+              "totalLessons": 2,
+              "lessons": [
+                  {
+                      "_id": "649c7d765655dc0f01b695f9",
+                      "lesson": "lesson One",
+                      "allStudents": 2,
+                      "presentStudents": 2,
+                      "absentStudents": 0,
+                      "date": "2023-07-28T08:00:00.627Z",
+                      "students": [
+                          {
+                              "_id": "649c79218f38a5a3ea9a285c",
+                              "firstName": "hilda",
+                              "lastName": "cherotich",
+                              "registationNumber": "stud-0001",
+                              "email": "hilda@gmail.com",
+                              "gender": "Female",
+                              "phone": 716009182,
+                              "present": true
+                          },
+                          {
+                              "_id": "649c79648f38a5a3ea9a2861",
+                              "firstName": "Kiprotich",
+                              "lastName": "shadrack",
+                              "registationNumber": "stud-0002",
+                              "email": "kipro@gmail.com",
+                              "gender": "Male",
+                              "phone": 716009182,
+                              "present": true
+                          }
+                      ]
+                  },
+                  {
+                      "_id": "649c7d825655dc0f01b69601",
+                      "lesson": "lesson Two",
+                      "allStudents": 2,
+                      "presentStudents": 2,
+                      "absentStudents": 0,
+                      "date": "2023-07-28T08:00:00.627Z",
+                      "students": [
+                          {
+                              "_id": "649c79218f38a5a3ea9a285c",
+                              "firstName": "hilda",
+                              "lastName": "cherotich",
+                              "registationNumber": "stud-0001",
+                              "email": "hilda@gmail.com",
+                              "gender": "Female",
+                              "phone": 716009182,
+                              "present": true
+                          },
+                          {
+                              "_id": "649c79648f38a5a3ea9a2861",
+                              "firstName": "Kiprotich",
+                              "lastName": "shadrack",
+                              "registationNumber": "stud-0002",
+                              "email": "kipro@gmail.com",
+                              "gender": "Male",
+                              "phone": 716009182,
+                              "present": true
+                          }
+                      ]
+                  }
+              ]
+          }
+      ]
+      }
+  ```
+    - **Description**: Returns an array of units object, and in each unit object is an array of lessons for the unit thought on that day with respective array of students who attended each lesson
+
+  - **Example** (JavaScript `fetch`):
+
+    ```javascript
+    const accessToken = "<access-token>";
+    const date = "20230705";
+
+    fetch(`http://localhost:4444/api/filterByDate/${date}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `${accessToken}`
+      }
+    })
+      .then(response => response.json())
+      .then(data => {
+        console.log(data);
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  ```
