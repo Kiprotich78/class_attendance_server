@@ -4,10 +4,12 @@ This document provides detailed information about the endpoints available in the
 
 - [Log In](#login)
 - [Sign Up](#signup)
-- [Add Student](#add-student)
-- [View All Students](#view-all-students)
-- [Add Single Student Unit](#add-single-student-unit)
-- [View Single Student Total Unist](#view-single-student-total-units)
+- [Student Routes](#student-routes)
+  - [Add Student](#add-student)
+  - [View All Students](#view-all-students)
+  - [Add Single Student Unit](#add-single-student-unit)
+  - [View Single Student Total Units](#view-single-student-total-units)
+  - [View Single Student Total Lessons](#view-single-student-total-lessons)
 
 ---
 
