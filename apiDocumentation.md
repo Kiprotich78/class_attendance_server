@@ -7,6 +7,7 @@ This document provides detailed information about the endpoints available in the
 - [Add Student](#add-student)
 - [View All Students](#view-all-students)
 - [Add Single Student Unit](#add-single-student-unit)
+- [View Single Student Total Unist](#view-single-student-total-units)
 
 ---
 
@@ -322,3 +323,85 @@ Add a single unit to a student. Authorization is required to access this endpoin
       console.error(error);
     });
   ```
+
+### View Single Student Total Units
+
+Retrieve the total units of a single student. Authorization is required to access this endpoint.
+
+- **URL**: `/api/getStudentUnits/:studentId`
+- **Method**: `GET`
+- **Headers**:
+  - `Authorization: <access-token>` (Required)
+
+- **URL Parameters**:
+  - `studentId`: The unique identifier of the student (e.g., `649c79648f38a5a3ea9a2861`)
+
+- **Response**:
+
+  - **Status Code**: `200 OK`
+  - **Content**: 
+      ```json
+      {
+        "total": 3,
+        "units": [
+          {
+            "_id": "649c8de6bce0c1059e0ad3a1",
+            "student": "649c79648f38a5a3ea9a2861",
+            "unit": {
+              "_id": "649c79f98f38a5a3ea9a2877",
+              "lecturerId": "64986412c9ad1e7fdac932ff",
+              "name": "Unit Two",
+              "__v": 0
+            },
+            "__v": 0
+          },
+          {
+            "_id": "649c8df7bce0c1059e0ad3a7",
+            "student": "649c79648f38a5a3ea9a2861",
+            "unit": {
+              "_id": "649c79f38f38a5a3ea9a2873",
+              "lecturerId": "64986412c9ad1e7fdac932ff",
+              "name": "Unit One",
+              "__v": 0
+            },
+            "__v": 0
+          },
+          {
+            "_id": "649c9ffa0e86d503e6775d90",
+            "student": "649c79648f38a5a3ea9a2861",
+            "unit": {
+              "_id": "649c7b70d4441b991aa4d6b8",
+              "lecturerId": "64986412c9ad1e7fdac932ff",
+              "name": "Unit Six",
+              "__v": 0
+            },
+            "__v": 0
+          }
+        ]
+      }
+      ```
+
+  - **Description**: Upon successful retrieval of the total units for the student, the server responds with a status code of `200 OK` and returns a JSON object containing the total number of units (`total`) and an array of units (`units`) associated with the student.
+
+- **Example** (JavaScript `fetch`):
+
+  ```javascript
+  const accessToken = "<access-token>";
+  const studentId = "649c79648f38a5a3ea9a2861";
+
+  fetch(`http://localhost:4444/students/${studentId}`, {
+    method: 'GET',
+    headers: {
+      'Authorization': `${accessToken}`
+    }
+  })
+    .then(response => response.json())
+    .then(data => {
+      console.log(data.total); // 3
+      console.log(data.units); // Array of unit objects
+    })
+    .catch(error => {
+      console.error(error);
+    });
+  ```
+
