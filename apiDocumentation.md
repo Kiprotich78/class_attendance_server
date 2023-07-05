@@ -15,6 +15,8 @@ This document provides detailed information about the endpoints available in the
   - [View All Units](#view-all-units)
   - [Add Lesson To Unit](#add-lesson-to-unit)
   - [Get All Lessons In a Unit](#get-all-lessons-in-a-unit)
+- [Attendance Routes](#attendance-routes)
+  - [Generate QR Code](#generate-qr-code)
 ---
 
 ### Login
@@ -794,6 +796,55 @@ Retrieve all lessons belonging to a specific unit. Authorization is required to 
     .catch(error => {
       console.error(error);
     });
+  ```
 
+## Attendance Routes
 
+### Generate QR Code
+
+Generate a QR code for a specific lesson within a unit.
+
+- **URL**: `/api/qrcode`
+- **Method**: `GET`
+- **Headers**:
+  - `Authorization: <access-token>` (Required)
+
+- **Query Parameters**:
+  - `unitId` (Required): The ID of the unit associated with the lesson.
+  - `lessonId` (Required): The ID of the lesson to generate the QR code for.
+
+- **Response**:
+
+  - **Status Code**: `200 OK`
+  - **Content**: 
+    ```json
+      {
+        "msg": "Success",
+        "imgUrl": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAANQAAADUCAYAAADk3g0YAAAAAkl..."
+      }
+
+    ```
+
+  - **Description**: The response will be the generated QR code image file, allowing you to display or download it as needed.
+
+- **Example** (JavaScript `fetch`):
+
+  ```javascript
+  const accessToken = "<access-token>";
+  const unitId = "649c79f98f38a5a3ea9a2877";
+  const lessonId = "649c7d765655dc0f01b695f9";
+
+  fetch(`http://localhost:4444/api/qrcode?unitId=${unitId}&lessonId=${lessonId}`, {
+    method: 'GET',
+    headers: {
+      'Authorization': `${accessToken}`
+    }
+  })
+    .then(response => response.json())
+    .then(data => {
+      console.log(date)
+    })
+    .catch(error => {
+      console.error(error);
+    });
 
