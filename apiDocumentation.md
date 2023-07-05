@@ -247,7 +247,7 @@ Retrieve a list of all students from the system. Authorization is required to ac
   ```javascript
   const accessToken = "<access-token>";
 
-  fetch('http://localhost:4444/students', {
+  fetch('http://localhost:4444/getAllStudents', {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
@@ -304,7 +304,7 @@ Add a single unit to a student. Authorization is required to access this endpoin
   const accessToken = "<access-token>";
   const studentId = "12345";
 
-  fetch(`http://localhost:4444/students/${studentId}/units`, {
+  fetch(`http://localhost:4444/api/addStudentUnit/${studentId}`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -389,9 +389,10 @@ Retrieve the total units of a single student. Authorization is required to acces
   const accessToken = "<access-token>";
   const studentId = "649c79648f38a5a3ea9a2861";
 
-  fetch(`http://localhost:4444/students/${studentId}`, {
+  fetch(`http://localhost:4444/api/getStudentUnits/${studentId}`, {
     method: 'GET',
     headers: {
+      'Content-Type': 'application/json',
       'Authorization': `${accessToken}`
     }
   })
@@ -404,4 +405,122 @@ Retrieve the total units of a single student. Authorization is required to acces
       console.error(error);
     });
   ```
+
+### View Single Student Total Lessons
+
+Retrieve the total lessons for perticular units of a single student. Authorization is required to access this endpoint.
+
+- **URL**: `/api/getStudentLessons/:studentId`
+- **Method**: `GET`
+- **Headers**:
+  - `Authorization: <access-token>` (Required)
+
+- **URL Parameters**:
+  - `studentId`: The unique identifier of the student (e.g., `649c79648f38a5a3ea9a2861`)
+
+- **Response**:
+
+  - **Status Code**: `200 OK`
+  - **Content**: 
+      ```json
+      {
+        "_id": "649c79648f38a5a3ea9a2861",
+        "name": "Kiprotich Shadrack",
+        "registrationNumber": "stud-0002",
+        "totalUnits": 3,
+        "units": [
+          {
+            "unitId": "649c79f98f38a5a3ea9a2877",
+            "unitName": "Unit Two",
+            "totalLessons": 3,
+            "lessons": [
+              {
+                "_id": "649c7d765655dc0f01b695f9",
+                "lessonName": "Lesson One",
+                "date": "2023-07-28T08:00:00.627Z"
+              },
+              {
+                "_id": "649c7d825655dc0f01b69601",
+                "lessonName": "Lesson Two",
+                "date": "2023-07-28T08:00:00.627Z"
+              },
+              {
+                "_id": "649c7d8d5655dc0f01b69606",
+                "lessonName": "Lesson Three",
+                "date": "2023-07-28T08:00:00.627Z"
+              }
+            ]
+          },
+          {
+            "unitId": "649c79f38f38a5a3ea9a2873",
+            "unitName": "Unit One",
+            "totalLessons": 3,
+            "lessons": [
+              {
+                "_id": "649c7c77d4441b991aa4d6c3",
+                "lessonName": "Lesson One",
+                "date": "2023-07-28T08:00:00.627Z"
+              },
+              {
+                "_id": "649c7d0e5655dc0f01b695ef",
+                "lessonName": "Lesson Two",
+                "date": "2023-07-28T08:00:00.627Z"
+              },
+              {
+                "_id": "649c7d155655dc0f01b695f4",
+                "lessonName": "Lesson Three",
+                "date": "2023-07-28T08:00:00.627Z"
+              }
+            ]
+          },
+          {
+            "unitId": "649c7b70d4441b991aa4d6b8",
+            "unitName": "Unit Six",
+            "totalLessons": 3,
+            "lessons": [
+              {
+                "_id": "649c7ed85655dc0f01b69638",
+                "lessonName": "Lesson Three",
+                "date": "2023-07-28T08:00:00.627Z"
+              },
+              {
+                "_id": "649c7eeb5655dc0f01b6963d",
+                "lessonName": "Lesson Two",
+                "date": "2023-07-28T08:00:00.627Z"
+              },
+              {
+                "_id": "649c7ef55655dc0f01b69642",
+                "lessonName": "Lesson One",
+                "date": "2023-07-28T08:00:00.627Z"
+              }
+            ]
+          }
+        ]
+      }
+      ```
+
+  - **Description**: Returns the total lessons of a single student, along with their details.
+
+- **Example** (JavaScript `fetch`):
+
+  ```javascript
+  const accessToken = "<access-token>";
+  const studentId = "649c79648f38a5a3ea9a2861";
+
+  fetch(`http://localhost:4444/api/getStudentLessons/${studentId}`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `${accessToken}`
+    }
+  })
+    .then(response => response.json())
+    .then(data => {
+      console.log(data);
+    })
+    .catch(error => {
+      console.error(error);
+    });
+  ```
+
 
