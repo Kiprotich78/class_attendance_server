@@ -18,6 +18,7 @@ This document provides detailed information about the endpoints available in the
 - [Attendance Routes](#attendance-routes)
   - [Generate QR Code](#generate-qr-code)
   - [Take Student Attendance](#take-student-attendance)
+  - [Filter Attendance By Unit](#filter-attendance-by-unit)
 ---
 
 ### Login
@@ -801,118 +802,243 @@ Retrieve all lessons belonging to a specific unit. Authorization is required to 
 
 ## Attendance Routes
 
-### Generate QR Code
+  ### Generate QR Code
 
-Generate a QR code for a specific lesson within a unit.
+  Generate a QR code for a specific lesson within a unit.
 
-- **URL**: `/api/qrcode`
-- **Method**: `GET`
-- **Headers**:
-  - `Authorization: <access-token>` (Required)
+  - **URL**: `/api/qrcode`
+  - **Method**: `GET`
+  - **Headers**:
+    - `Authorization: <access-token>` (Required)
 
-- **Query Parameters**:
-  - `unitId` (Required): The ID of the unit associated with the lesson.
-  - `lessonId` (Required): The ID of the lesson to generate the QR code for.
+  - **Query Parameters**:
+    - `unitId` (Required): The ID of the unit associated with the lesson.
+    - `lessonId` (Required): The ID of the lesson to generate the QR code for.
 
-- **Response**:
+  - **Response**:
 
-  - **Status Code**: `200 OK`
-  - **Content**: 
-    ```json
-      {
-        "msg": "Success",
-        "imgUrl": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAANQAAADUCAYAAADk3g0YAAAAAkl..."
+    - **Status Code**: `200 OK`
+    - **Content**: 
+      ```json
+        {
+          "msg": "Success",
+          "imgUrl": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAANQAAADUCAYAAADk3g0YAAAAAkl..."
+        }
+
+      ```
+
+    - **Description**: The response will be the generated QR code image file, allowing you to display or download it as needed.
+
+  - **Example** (JavaScript `fetch`):
+
+    ```javascript
+    const accessToken = "<access-token>";
+    const unitId = "649c79f98f38a5a3ea9a2877";
+    const lessonId = "649c7d765655dc0f01b695f9";
+
+    fetch(`http://localhost:4444/api/qrcode?unitId=${unitId}&lessonId=${lessonId}`, {
+      method: 'GET',
+      headers: {
+        'Authorization': `${accessToken}`
       }
-
-    ```
-
-  - **Description**: The response will be the generated QR code image file, allowing you to display or download it as needed.
-
-- **Example** (JavaScript `fetch`):
-
-  ```javascript
-  const accessToken = "<access-token>";
-  const unitId = "649c79f98f38a5a3ea9a2877";
-  const lessonId = "649c7d765655dc0f01b695f9";
-
-  fetch(`http://localhost:4444/api/qrcode?unitId=${unitId}&lessonId=${lessonId}`, {
-    method: 'GET',
-    headers: {
-      'Authorization': `${accessToken}`
-    }
-  })
-    .then(response => response.json())
-    .then(data => {
-      console.log(date)
     })
-    .catch(error => {
-      console.error(error);
-    });
+      .then(response => response.json())
+      .then(data => {
+        console.log(date)
+      })
+      .catch(error => {
+        console.error(error);
+      });
 
-    ```
+      ```
 
-### Take Student Attendance
+  ### Take Student Attendance
 
-Record the attendance of a student for a specific lesson. No authorization is required to access this endpoint.
+  Record the attendance of a student for a specific lesson. No authorization is required to access this endpoint.
 
-- **URL**: `/api/attendance`
-- **Method**: `POST`
-- **Headers**:
-  - `Content-Type: application/json` (Required)
+  - **URL**: `/api/attendance`
+  - **Method**: `POST`
+  - **Headers**:
+    - `Content-Type: application/json` (Required)
 
-- **Request Body**:
+  - **Request Body**:
 
-  | Parameter   | Type     | Required | Description                             |
-  |-------------|----------|----------|---------------------------------------- |
-  | lecturerId  | string   | Yes      | The ID of the lecturer.                 |
-  | studentId   | string   | Yes      | The ID of the student.                  |
-  | unitId      | string   | Yes      | The ID of the unit.                     |
-  | lessonId    | string   | Yes      | The ID of the lesson.                   |
+    | Parameter   | Type     | Required | Description                             |
+    |-------------|----------|----------|---------------------------------------- |
+    | lecturerId  | string   | Yes      | The ID of the lecturer.                 |
+    | studentId   | string   | Yes      | The ID of the student.                  |
+    | unitId      | string   | Yes      | The ID of the unit.                     |
+    | lessonId    | string   | Yes      | The ID of the lesson.                   |
 
-  - **Example**: 
-    ```json
-      {
+    - **Example**: 
+      ```json
+        {
+          "lecturerId": "64986412c9ad1e7fdac932ff",
+          "studentId": "649c79218f38a5a3ea9a285c",
+          "unitId": "649c79f98f38a5a3ea9a2877",
+          "lessonId": "649c7d8d5655dc0f01b69606"
+        }
+
+  - **Response**:
+    - **Status Code**: `200 ok`
+    - **Content**:
+      ```json
+        {
+          "message": "Attendance taken successfully",
+          "attendance": {
+              "lecturerId": "64986412c9ad1e7fdac932ff",
+              "studentId": "649c79218f38a5a3ea9a285c",
+              "unitId": "649c79f98f38a5a3ea9a2877",
+              "lessonId": "649c7d8d5655dc0f01b69606",
+              "_id": "64a577ef83ae88c26c22f11b",
+              "createdAt": "2023-07-05T14:02:23.962Z",
+              "updatedAt": "2023-07-05T14:02:23.962Z",
+              "__v": 0
+          }
+        }
+      ```
+    - **Description**: Returns a success message along with the attendance object containing the details of the recorded attendance.
+
+  - **Example**: (Javascript `fetch`):
+    ```javascript
+      const requestBody = {
         "lecturerId": "64986412c9ad1e7fdac932ff",
         "studentId": "649c79218f38a5a3ea9a285c",
         "unitId": "649c79f98f38a5a3ea9a2877",
         "lessonId": "649c7d8d5655dc0f01b69606"
-      }
+      };
 
-- **Response**:
-  - **Status Code**: `200 ok`
-  - **Content**:
-    ```json
-      {
-        "message": "Attendance taken successfully",
-        "attendance": {
-            "lecturerId": "64986412c9ad1e7fdac932ff",
-            "studentId": "649c79218f38a5a3ea9a285c",
-            "unitId": "649c79f98f38a5a3ea9a2877",
-            "lessonId": "649c7d8d5655dc0f01b69606",
-            "_id": "64a577ef83ae88c26c22f11b",
-            "createdAt": "2023-07-05T14:02:23.962Z",
-            "updatedAt": "2023-07-05T14:02:23.962Z",
-            "__v": 0
-        }
-      }
+      fetch("http://localhost:4444/api/attendance", {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(requestBody)
+      })
+        .then(response => response.json())
+        .then(data => {
+          console.log(data);
+        })
+        .catch(error => {
+          console.error(error);
+        });
     ```
-  - **Description**: Returns a success message along with the attendance object containing the details of the recorded attendance.
 
-- **Example**: (Javascript `fetch`):
-  ```javascript
-    const requestBody = {
-      "lecturerId": "64986412c9ad1e7fdac932ff",
-      "studentId": "649c79218f38a5a3ea9a285c",
-      "unitId": "649c79f98f38a5a3ea9a2877",
-      "lessonId": "649c7d8d5655dc0f01b69606"
-    };
+  ### Filter Attendance by Unit
 
-    fetch("http://localhost:4444/api/attendance", {
-      method: 'POST',
+  Retrieve attendance details for all lessons in a specific unit. Authorization is required to access this endpoint.
+
+  - **URL**: `/api/filterByUnit/:unitId`
+  - **Method**: `GET`
+  - **Headers**:
+    - `Authorization: <access-token>` (Required)
+
+  - **URL Parameters**:
+    - `unitId` (Required): The ID of the unit to filter the attendance for.
+
+  - **Response**:
+
+    - **Status Code**: `200 OK`
+    - **Content**: 
+      ```json
+      [
+        {
+          "_id": "649c7ed85655dc0f01b69638",
+          "lesson": "Lesson Three",
+          "date": "2023-07-28T08:00:00.627Z",
+          "allStudents": 1,
+          "presentStudents": 0,
+          "absentStudents": 1,
+          "students": [
+            {
+              "_id": "649c79648f38a5a3ea9a2861",
+              "firstName": "Kiprotich",
+              "lastName": "Shadrack",
+              "registationNumber": "stud-0002",
+              "email": "kipro@gmail.com",
+              "gender": "Male",
+              "phone": 716009182,
+              "present": false
+            }
+          ]
+        },
+        {
+          "_id": "649c7eeb5655dc0f01b6963d",
+          "lesson": "Lesson Two",
+          "date": "2023-07-28T08:00:00.627Z",
+          "allStudents": 1,
+          "presentStudents": 0,
+          "absentStudents": 1,
+          "students": [
+            {
+              "_id": "649c79648f38a5a3ea9a2861",
+              "firstName": "Kiprotich",
+              "lastName": "Shadrack",
+              "registationNumber": "stud-0002",
+              "email": "kipro@gmail.com",
+              "gender": "Male",
+              "phone": 716009182,
+              "present": false
+            }
+          ]
+        },
+        {
+          "_id": "649c7ef55655dc0f01b69642",
+          "lesson": "Lesson One",
+          "date": "2023-07-28T08:00:00.627Z",
+          "allStudents": 1,
+          "presentStudents": 0,
+          "absentStudents": 1,
+          "students": [
+            {
+              "_id": "649c79648f38a5a3ea9a2861",
+              "firstName": "Kiprotich",
+              "lastName": "Shadrack",
+              "registationNumber": "stud-0002",
+              "email": "kipro@gmail.com",
+              "gender": "Male",
+              "phone": 716009182,
+              "present": false
+            }
+          ]
+        },
+        {
+          "_id": "64a5724083ae88c26c22f101",
+          "lesson": "Lesson Four",
+          "date": "2023-07-28T08:00:00.627Z",
+          "allStudents": 1,
+          "presentStudents": 0,
+          "absentStudents": 1,
+          "students": [
+            {
+              "_id": "649c79648f38a5a3ea9a2861",
+              "firstName": "Kiprotich",
+              "lastName": "Shadrack",
+              "registationNumber": "stud-0002",
+              "email": "kipro@gmail.com",
+              "gender": "Male",
+              "phone": 716009182,
+              "present": false
+            }
+          ]
+        }
+      ]
+      ```
+
+    - **Description**: Returns an array of objects containing attendance details for each lesson in the specified unit. Each object includes the lesson details, the total number of students, the number of students present, the number of students absent, and an array of student objects indicating their attendance status.
+
+  - **Example** (JavaScript `fetch`):
+
+    ```javascript
+    const accessToken = "<access-token>";
+    const unitId = "649c79f98f38a5a3ea9a2877";
+
+    fetch(`http://localhost:4444/api/filterByUnit/${unitId}`, {
+      method: 'GET',
       headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(requestBody)
+        'Content-Type': 'application/json',
+        'Authorization': `${accessToken}`
+      }
     })
       .then(response => response.json())
       .then(data => {
@@ -921,4 +1047,3 @@ Record the attendance of a student for a specific lesson. No authorization is re
       .catch(error => {
         console.error(error);
       });
-  ```
