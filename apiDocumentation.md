@@ -17,6 +17,7 @@ This document provides detailed information about the endpoints available in the
   - [Get All Lessons In a Unit](#get-all-lessons-in-a-unit)
 - [Attendance Routes](#attendance-routes)
   - [Generate QR Code](#generate-qr-code)
+  - [Take Student Attendance](#take-student-attendance)
 ---
 
 ### Login
@@ -848,3 +849,76 @@ Generate a QR code for a specific lesson within a unit.
       console.error(error);
     });
 
+    ```
+
+### Take Student Attendance
+
+Record the attendance of a student for a specific lesson. No authorization is required to access this endpoint.
+
+- **URL**: `/api/attendance`
+- **Method**: `POST`
+- **Headers**:
+  - `Content-Type: application/json` (Required)
+
+- **Request Body**:
+
+  | Parameter   | Type     | Required | Description                             |
+  |-------------|----------|----------|---------------------------------------- |
+  | lecturerId  | string   | Yes      | The ID of the lecturer.                 |
+  | studentId   | string   | Yes      | The ID of the student.                  |
+  | unitId      | string   | Yes      | The ID of the unit.                     |
+  | lessonId    | string   | Yes      | The ID of the lesson.                   |
+
+  - **Example**: 
+    ```json
+      {
+        "lecturerId": "64986412c9ad1e7fdac932ff",
+        "studentId": "649c79218f38a5a3ea9a285c",
+        "unitId": "649c79f98f38a5a3ea9a2877",
+        "lessonId": "649c7d8d5655dc0f01b69606"
+      }
+
+- **Response**:
+  - **Status Code**: `200 ok`
+  - **Content**:
+    ```json
+      {
+        "message": "Attendance taken successfully",
+        "attendance": {
+            "lecturerId": "64986412c9ad1e7fdac932ff",
+            "studentId": "649c79218f38a5a3ea9a285c",
+            "unitId": "649c79f98f38a5a3ea9a2877",
+            "lessonId": "649c7d8d5655dc0f01b69606",
+            "_id": "64a577ef83ae88c26c22f11b",
+            "createdAt": "2023-07-05T14:02:23.962Z",
+            "updatedAt": "2023-07-05T14:02:23.962Z",
+            "__v": 0
+        }
+      }
+    ```
+  - **Description**: Returns a success message along with the attendance object containing the details of the recorded attendance.
+
+- **Example**: (Javascript `fetch`):
+  ```javascript
+    const requestBody = {
+      "lecturerId": "64986412c9ad1e7fdac932ff",
+      "studentId": "649c79218f38a5a3ea9a285c",
+      "unitId": "649c79f98f38a5a3ea9a2877",
+      "lessonId": "649c7d8d5655dc0f01b69606"
+    };
+
+    fetch("http://localhost:4444/api/attendance", {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(requestBody)
+    })
+      .then(response => response.json())
+      .then(data => {
+        console.log(data);
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  ```
