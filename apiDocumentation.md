@@ -1247,7 +1247,7 @@ This API endpoint retrieves the attendance records for a specific date. It provi
           }
       ]
       }
-  ```
+    ```
     - **Description**: Returns an array of units object, and in each unit object is an array of lessons for the unit thought on that day with respective array of students who attended each lesson
 
   - **Example** (JavaScript `fetch`):
