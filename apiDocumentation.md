@@ -1,7 +1,7 @@
 # API Documentation
 
-**Author**: Kiprotich Shadrack
-**GitHub**: [Kiprotich78](https://github.com/kiprotich78)
+- **Author**: Kiprotich Shadrack
+- **GitHub**: [Kiprotich78](https://github.com/kiprotich78)
 
 This document provides detailed information about the endpoints available in the Class Attendance Register server.
 
