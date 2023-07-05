@@ -14,6 +14,7 @@ This document provides detailed information about the endpoints available in the
   - [Add Unit](#add-unit)
   - [View All Units](#view-all-units)
   - [Add Lesson To Unit](#add-lesson-to-unit)
+  - [Get All Lessons In a Unit](#get-all-lessons-in-a-unit)
 ---
 
 ### Login
@@ -718,4 +719,81 @@ Add a new lesson to a specific unit. Authorization is required to access this en
     .catch(error => {
       console.error(error);
     });
+   ```
+
+### Get All Lessons in a Unit
+
+Retrieve all lessons belonging to a specific unit. Authorization is required to access this endpoint.
+
+- **URL**: `/api/getAllLessons/:unitId`
+- **Method**: `GET`
+- **Headers**:
+  - `Authorization: <access-token>` (Required)
+
+- **URL Parameters**:
+  - `unitId` (Required): The ID of the unit to fetch the lessons from.
+
+- **Response**:
+
+  - **Status Code**: `200 OK`
+  - **Content**: 
+      ```json
+      {
+        "total": 3,
+        "lessons": [
+          {
+            "_id": "649c7d765655dc0f01b695f9",
+            "lessonName": "Lesson One",
+            "unitID": "649c79f98f38a5a3ea9a2877",
+            "date": "2023-07-28T08:00:00.627Z",
+            "startTime": "0900",
+            "duration": 60,
+            "__v": 0
+          },
+          {
+            "_id": "649c7d825655dc0f01b69601",
+            "lessonName": "Lesson Two",
+            "unitID": "649c79f98f38a5a3ea9a2877",
+            "date": "2023-07-28T08:00:00.627Z",
+            "startTime": "0900",
+            "duration": 60,
+            "__v": 0
+          },
+          {
+            "_id": "649c7d8d5655dc0f01b69606",
+            "lessonName": "Lesson Three",
+            "unitID": "649c79f98f38a5a3ea9a2877",
+            "date": "2023-07-28T08:00:00.627Z",
+            "startTime": "0900",
+            "duration": 60,
+            "__v": 0
+          }
+        ]
+      }
+      ```
+
+  - **Description**: Returns the total number of lessons and an array of lesson objects belonging to the specified unit.
+
+- **Example** (JavaScript `fetch`):
+
+  ```javascript
+  const accessToken = "<access-token>";
+  const unitId = "649c79f98f38a5a3ea9a2877";
+
+  fetch(`http://localhost:4444/api/getAllLessons/${unitId}`, {
+    method: 'GET',
+    headers: {
+      'Content-Type' : 'application/json',
+      'Authorization': `${accessToken}`
+    }
+  })
+    .then(response => response.json())
+    .then(data => {
+      console.log(data);
+    })
+    .catch(error => {
+      console.error(error);
+    });
+
+
 
