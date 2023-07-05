@@ -10,7 +10,8 @@ This document provides detailed information about the endpoints available in the
   - [Add Single Student Unit](#add-single-student-unit)
   - [View Single Student Total Units](#view-single-student-total-units)
   - [View Single Student Total Lessons](#view-single-student-total-lessons)
-
+- [Unit Routes](#unit-routes)
+  - [Add Unit](#add-unit)
 ---
 
 ### Login
@@ -526,3 +527,62 @@ Retrieve the total lessons for perticular units of a single student. Authorizati
   ```
 
 
+
+## Unit Routes
+
+### Add Unit
+
+Add a new unit to the system. Authorization is required to access this endpoint.
+
+- **URL**: `/api/addUnit`
+- **Method**: `POST`
+- **Headers**:
+  - `Authorization: <access-token>` (Required)
+
+- **Request Body**:
+
+  | Field       | Type     | Description                |
+  | ----------- | -------- | -------------------------- |
+  | name        | `string` | The name of the unit       |
+
+- **Response**:
+
+  - **Status Code**: `200 OK`
+  - **Content**: 
+      ```json
+      {
+        "msg": "Unit Added Successfully",
+        "unit": {
+          "lecturerId": "64986412c9ad1e7fdac932ff",
+          "name": "Installation and Customization",
+          "_id": "64a56c8d83ae88c26c22f0f6",
+          "__v": 0
+        }
+      }
+      ```
+
+  - **Description**: Returns a success message and the details of the newly added unit.
+
+- **Example** (JavaScript `fetch`):
+
+  ```javascript
+  const accessToken = "<access-token>";
+
+  fetch('http://localhost:4444/api/addUnit', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `${accessToken}`
+    },
+    body: JSON.stringify({
+      name: 'Installation and customization'
+    })
+  })
+    .then(response => response.json())
+    .then(data => {
+      console.log(data);
+    })
+    .catch(error => {
+      console.error(error);
+    });
+  ```
