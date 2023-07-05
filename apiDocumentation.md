@@ -12,6 +12,7 @@ This document provides detailed information about the endpoints available in the
   - [View Single Student Total Lessons](#view-single-student-total-lessons)
 - [Unit Routes](#unit-routes)
   - [Add Unit](#add-unit)
+  - [View All Units](#view-all-units)
 ---
 
 ### Login
@@ -586,3 +587,66 @@ Add a new unit to the system. Authorization is required to access this endpoint.
       console.error(error);
     });
   ```
+
+### View All Units
+
+Retrieve all units from the system. Authorization is required to access this endpoint.
+
+- **URL**: `/api/getAllUnits`
+- **Method**: `GET`
+- **Headers**:
+  - `Authorization: <access-token>` (Required)
+
+- **Response**:
+
+  - **Status Code**: `200 OK`
+  - **Content**: 
+      ```json
+      {
+      "total": 3,
+      "units": [
+          {
+            "_id": "649c79f38f38a5a3ea9a2873",
+            "lecturerId": "64986412c9ad1e7fdac932ff",
+            "name": "Unit One",
+            "__v": 0
+          },
+          {
+              "_id": "649c79f98f38a5a3ea9a2877",
+              "lecturerId": "64986412c9ad1e7fdac932ff",
+              "name": "Unit Two",
+              "__v": 0
+          },
+          {
+              "_id": "649c79ff8f38a5a3ea9a287b",
+              "lecturerId": "64986412c9ad1e7fdac932ff",
+              "name": "Unit Three",
+              "__v": 0
+          }
+        ]
+      }
+      ```
+
+  - **Description**: Returns an array of all units in the system.
+
+- **Example** (JavaScript `fetch`):
+
+  ```javascript
+    const accessToken = "<access-token>";
+
+    fetch('http://localhost:4444/api/getAllUnits', {
+      method: 'GET',
+      headers: {
+        'Content-Type' : 'application/json', 
+        'Authorization': `${accessToken}`
+      }
+    })
+      .then(response => response.json())
+      .then(data => {
+        console.log(data);
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  ```
+
