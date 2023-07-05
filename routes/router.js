@@ -26,7 +26,7 @@ router.post('/login', logIn)
 router.post('/signup', signup)
 
 // protected routes
-router.get('/studentDetails', auth, studentDetails)
+router.get('/studentDetails/:studentId', auth, studentDetails)
 router.post('/addstudent', auth, addStudent)
 router.get('/getAllStudents', auth, getAllStudents)
 router.post('/addStudentUnit/:studId', auth, addStudentUnit)
