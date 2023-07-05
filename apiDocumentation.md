@@ -15,6 +15,7 @@ This document provides detailed information about the endpoints available in the
   - [View Single Student Total Lessons](#view-single-student-total-lessons)
 - [Unit Routes](#unit-routes)
   - [Add Unit](#add-unit)
+  - [View single Student Details](#view-single-student-details)
   - [View All Units](#view-all-units)
   - [Add Lesson To Unit](#add-lesson-to-unit)
   - [Get All Lessons In a Unit](#get-all-lessons-in-a-unit)
@@ -210,6 +211,164 @@ Add a new student to the system. Authorization is required to access this endpoi
     });
 
     ```
+
+
+### View Single Student Details
+
+Retrieve details of a single student, including the number of units taken and lessons attended or missed.
+
+- **URL**: `/api/studentDetails/:studentId`
+- **Method**: `POST`
+- **Headers**:
+  - `Content-Type: application/json` (Required)
+  - `Authorization: <access-token>` (Required)
+
+- **URL Parameters**:
+  - `studentId`: The unique identifier of the student (e.g., `64a1d4af6de161f0ac7b24a9`)
+
+- **Request Body**: None
+
+- **Response**:
+
+  - **Status Code**: `200 OK`
+  - **Content**: 
+      ```json
+          {
+          "firstName": "Kiprotich",
+          "lastName": "shadrack",
+          "registrationNumber": "stud-0002",
+          "email": "kipro@gmail.com",
+          "phone": 716009182,
+          "gender": "Male",
+          "totalUnitsTaken": 3,
+          "units": [
+              {
+                  "unitName": "Unit Two",
+                  "attendedLessons": 2,
+                  "missedlessons": 1,
+                  "lessons": [
+                      {
+                          "_id": "649c7d765655dc0f01b695f9",
+                          "lessonName": "lesson One",
+                          "date": "2023-07-28T08:00:00.627Z",
+                          "startTime": "0900",
+                          "duration": 60,
+                          "attended": true
+                      },
+                      {
+                          "_id": "649c7d825655dc0f01b69601",
+                          "lessonName": "lesson Two",
+                          "date": "2023-07-28T08:00:00.627Z",
+                          "startTime": "0900",
+                          "duration": 60,
+                          "attended": true
+                      },
+                      {
+                          "_id": "649c7d8d5655dc0f01b69606",
+                          "lessonName": "lesson Three",
+                          "date": "2023-07-28T08:00:00.627Z",
+                          "startTime": "0900",
+                          "duration": 60,
+                          "attended": false
+                      }
+                  ]
+              },
+              {
+                  "unitName": "Unit One",
+                  "attendedLessons": 2,
+                  "missedlessons": 1,
+                  "lessons": [
+                      {
+                          "_id": "649c7c77d4441b991aa4d6c3",
+                          "lessonName": "lesson One",
+                          "date": "2023-07-28T08:00:00.627Z",
+                          "startTime": "0900",
+                          "duration": 60,
+                          "attended": true
+                      },
+                      {
+                          "_id": "649c7d0e5655dc0f01b695ef",
+                          "lessonName": "lesson Two",
+                          "date": "2023-07-28T08:00:00.627Z",
+                          "startTime": "0900",
+                          "duration": 60,
+                          "attended": true
+                      },
+                      {
+                          "_id": "649c7d155655dc0f01b695f4",
+                          "lessonName": "lesson Three",
+                          "date": "2023-07-28T08:00:00.627Z",
+                          "startTime": "0900",
+                          "duration": 60,
+                          "attended": false
+                      }
+                  ]
+              },
+              {
+                  "unitName": "Unit Six",
+                  "attendedLessons": 0,
+                  "missedlessons": 4,
+                  "lessons": [
+                      {
+                          "_id": "649c7ed85655dc0f01b69638",
+                          "lessonName": "lesson Three",
+                          "date": "2023-07-28T08:00:00.627Z",
+                          "startTime": "0900",
+                          "duration": 60,
+                          "attended": false
+                      },
+                      {
+                          "_id": "649c7eeb5655dc0f01b6963d",
+                          "lessonName": "lesson Two",
+                          "date": "2023-07-28T08:00:00.627Z",
+                          "startTime": "0900",
+                          "duration": 60,
+                          "attended": false
+                      },
+                      {
+                          "_id": "649c7ef55655dc0f01b69642",
+                          "lessonName": "lesson One",
+                          "date": "2023-07-28T08:00:00.627Z",
+                          "startTime": "0900",
+                          "duration": 60,
+                          "attended": false
+                      },
+                      {
+                          "_id": "64a5724083ae88c26c22f101",
+                          "lessonName": "lesson Four",
+                          "date": "2023-07-28T08:00:00.627Z",
+                          "startTime": "0900",
+                          "duration": 60,
+                          "attended": false
+                      }
+                  ]
+              }
+          ]
+      }
+      ```
+      - **Description**: Returns a JSON object containing the student details, including the number of units taken and lessons attended and missed. Each unit includes its name, the number of attended lessons, the number of missed lessons, and the lessons details (including the lesson ID, name, date, start time, duration, and attended status).
+
+- **Example** (JavaScript `fetch`):
+
+  ```javascript
+    const accessToken = "<access-token>";
+    const studentId = "649c79648f38a5a3ea9a2861";
+
+    fetch(`http://localhost:4444/api/studentDetails/${studentId}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `${accessToken}`
+      }
+    })
+      .then(response => response.json())
+      .then(data => {
+        console.log(data); // Student details including units and lessons
+      })
+      .catch(error => {
+        console.error(error);
+      });
+
 
 ### View All Students
 
