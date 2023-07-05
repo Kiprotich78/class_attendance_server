@@ -6,6 +6,7 @@ This document provides detailed information about the endpoints available in the
 - [Sign Up](#signup)
 - [Add Student](#add-student)
 - [View All Students](#view-all-students)
+- [Add Single Student Unit](#add-single-student-unit)
 
 ---
 
@@ -248,6 +249,7 @@ Retrieve a list of all students from the system. Authorization is required to ac
   fetch('http://localhost:4444/students', {
     method: 'GET',
     headers: {
+      'Content-Type': 'application/json',
       'Authorization': `${accessToken}`
     }
   })
@@ -258,3 +260,65 @@ Retrieve a list of all students from the system. Authorization is required to ac
     .catch(error => {
       console.error(error);
     });
+
+### Add Single Student Unit
+
+Add a single unit to a student. Authorization is required to access this endpoint.
+
+- **URL**: `/api/addStudentUnit/:studentId`
+- **Method**: `POST`
+- **Headers**:
+  - `Authorization: <access-token>` (Required)
+
+- **URL Parameters**:
+  - `studentId`: The unique identifier of the student (e.g., `64a1d4af6de161f0ac7b24a9`)
+
+- **Request Body**:
+
+  | Field    | Type     | Description                |
+  | -------- | -------- | ---------------------------|
+  | unitId   | `string` | The unique unit identifier |
+
+- **Response**:
+
+  - **Status Code**: `201 Created`
+  - **Content**: 
+      ```json
+        {
+          "msg": "unit added successfully",
+          "unit": {
+              "student": "64a1d4af6de161f0ac7b24a9",
+              "unit": "649c79f38f38a5a3ea9a2873",
+              "_id": "64a5551e83ae88c26c22f0e3",
+              "__v": 0
+          }
+        }
+      ```
+
+  - **Description**: Upon successful addition of a unit to the student, the server responds with a status code of `201 Created` and returns a JSON object containing a success message and the added unit details.
+
+- **Example** (JavaScript `fetch`):
+
+  ```javascript
+  const accessToken = "<access-token>";
+  const studentId = "12345";
+
+  fetch(`http://localhost:4444/students/${studentId}/units`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `${accessToken}`
+    },
+    body: JSON.stringify({
+      unitId: "649c79f38f38a5a3ea9a2873"
+    })
+  })
+    .then(response => response.json())
+    .then(data => {
+      console.log(data.msg); // Unit added successfully
+      console.log(data.unit); // 
+    })
+    .catch(error => {
+      console.error(error);
+    });
+  ```
