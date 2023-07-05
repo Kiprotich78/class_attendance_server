@@ -5,10 +5,11 @@ This document provides detailed information about the endpoints available in the
 - [Log In](#login)
 - [Sign Up](#signup)
 - [Add Student](#add-student)
+- [View All Students](#view-all-students)
 
 ---
 
-## Login
+### Login
 
 Authenticate a user and obtain an access token.
 
@@ -66,7 +67,7 @@ Authenticate a user and obtain an access token.
         });
    ```
 
-## SignUp
+### SignUp
 
 Create a new user account.
 
@@ -125,7 +126,9 @@ Create a new user account.
 
    ```
 
-## Add Student
+## Student Routes
+
+### Add Student
 
 Add a new student to the system. Authorization is required to access this endpoint.
 
@@ -191,3 +194,67 @@ Add a new student to the system. Authorization is required to access this endpoi
     });
 
     ```
+
+### View All Students
+
+Retrieve a list of all students from the system. Authorization is required to access this endpoint.
+
+- **URL**: `/api/getAllStudents`
+- **Method**: `GET`
+- **Headers**:
+  - `Authorization: <access-token>` (Required)
+
+- **Response**:
+
+  - **Status Code**: `200 OK`
+  - **Content**: 
+      ```json
+      {
+        "total": 2,
+        "students": [ 
+            {
+                "_id": "649c79218f38a5a3ea9a285c",
+                "lecturerId": "64986412c9ad1e7fdac932ff",
+                "firstName": "Jane",
+                "lastName": "doe",
+                "registrationNumber": "stud-0001",
+                "email": "hilda@gmail.com",
+                "phone": 716009187,
+                "gender": "Female",
+                "__v": 0
+            },
+            {
+                "_id": "649c79648f38a5a3ea9a2861",
+                "lecturerId": "64986412c9ad1e7fdac932ff",
+                "firstName": "Kiprotich",
+                "lastName": "shadrack",
+                "registrationNumber": "stud-0002",
+                "email": "kipro@gmail.com",
+                "phone": 716009182,
+                "gender": "Male",
+                "__v": 0
+            }
+        ]
+      }
+      ```
+
+  - **Description**: Upon successful retrieval of all students, the server responds with a status code of `200 OK` and returns a JSON object containing an array of student objects.
+
+- **Example** (JavaScript `fetch`):
+
+  ```javascript
+  const accessToken = "<access-token>";
+
+  fetch('http://localhost:4444/students', {
+    method: 'GET',
+    headers: {
+      'Authorization': `${accessToken}`
+    }
+  })
+    .then(response => response.json())
+    .then(data => {
+      console.log(data.students); 
+    })
+    .catch(error => {
+      console.error(error);
+    });
