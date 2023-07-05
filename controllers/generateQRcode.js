@@ -40,11 +40,10 @@ const generateQRcode = async (req, res)=>{
 
         const url = await QrCode.toDataURL(jsonText);
     
-        res.send(
-            // msg: "success", 
-            // imgUrl: url
-            `<img src='${url}'/>`
-        );
+        res.status(200).json({
+            message: "success",
+            imgUrl: url
+        });
 
     } catch (err) {
         res.status(500).send({Error: 'Internal Server Error'});
